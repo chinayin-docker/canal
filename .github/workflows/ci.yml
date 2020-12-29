@@ -1,0 +1,33 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: master
+  schedule:
+    - cron: 0 0 * * *
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        image: ['1.1.5']
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the Docker image
+        env:
+          IMAGE: ${{ matrix.image }}
+        run: |
+          export TAG_VERSION=${IMAGE}
+          docker build . --file ${{ matrix.image }}/server/Dockerfile --tag chinayin/canal:${TAG_VERSION}
+          docker image ls
+
+      - name: Push image to Docker hub
+        if: success()
+        env:
+          IMAGE: ${{ matrix.image }}
+        run: |
+          export TAG_VERSION=${IMAGE}
+          echo ${{ secrets.DOCKER_HUB_PASSWORD }} | docker login -u ${{ secrets.DOCKER_HUB_USER }} --password-stdin
+          docker push chinayin/canal:${TAG_VERSION}
+          docker logout
