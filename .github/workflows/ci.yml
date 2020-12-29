@@ -19,7 +19,8 @@ jobs:
           IMAGE: ${{ matrix.image }}
         run: |
           export TAG_VERSION=${IMAGE}
-          docker build . --file ${{ matrix.image }}/server/Dockerfile --tag chinayin/canal:${TAG_VERSION}
+          cd ${{ matrix.image }}/server
+          docker build . --file Dockerfile --tag chinayin/canal:${TAG_VERSION}
           docker image ls
 
       - name: Push image to Docker hub
