@@ -37,6 +37,7 @@ RUN set -eux; \
     rm -f $CANAL_PATH/bin/*.bat; \
     mv -f /app/*.sh "$CANAL_PATH/bin/"; \
     chmod +x $CANAL_PATH/bin/*.sh; \
+    rm -rf $CANAL_PATH/conf/example; \
     \
     printf "canal=$CANAL_TYPE\n path=$CANAL_PATH"; \
     java -version
