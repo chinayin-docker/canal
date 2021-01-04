@@ -6,7 +6,7 @@
 
 FROM openjdk:8-jdk-slim
 LABEL maintainer="chinayin <whereismoney@qq.com>" Version="v1.1.5-alpha-2"
-ENV DEBIAN_FRONTEND=noninteractive DEPLOY_IMAGE_VERSION="2020-12-29 15:35"
+ENV DEBIAN_FRONTEND=noninteractive DEPLOY_IMAGE_VERSION="2021-01-04 14:43"
 ENV CANAL_TYPE="server" CANAL_VERSION="1.1.5-alpha-2"
 
 ARG CHANGE_SOURCE=true
@@ -22,7 +22,7 @@ RUN set -eux; \
     apt-get autoremove -y; \
     apt-get upgrade -y; \
     apt-get install -y --no-install-recommends \
-        apt-utils wget vim procps iputils-ping telnet \
+        apt-utils wget vim procps iputils-ping telnet file \
     ; \
     apt-get clean; \
     rm -rf /var/lib/apt/lists/*; \

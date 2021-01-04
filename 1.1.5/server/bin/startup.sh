@@ -85,7 +85,7 @@ case "$#" in
   ;;
 esac
 
-CANAL_JAVA_OPTS=${CANAL_JAVA_OPTS:-"-Xms1024m -Xmx1024m"};
+CANAL_JAVA_OPTS=${CANAL_JAVA_OPTS:-"-Xms1024m -Xmx1024m"}
 str=$(file -L $JAVA | grep 64-bit)
 if [ -n "$str" ]; then
   JAVA_OPTS="-server $CANAL_JAVA_OPTS -Xmn1024m -XX:SurvivorRatio=2 -XX:PermSize=96m -XX:MaxPermSize=256m -Xss256k -XX:-UseAdaptiveSizePolicy -XX:MaxTenuringThreshold=15 -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:+HeapDumpOnOutOfMemoryError"
