@@ -18,13 +18,11 @@ RUN if [ $CHANGE_SOURCE = true ]; then \
 ;fi && cp /usr/share/zoneinfo/$TIMEZONE /etc/localtime && echo "$TIMEZONE" > /etc/timezone;
 
 RUN set -eux; \
-    apt-get update; \
-    apt-get autoremove -y; \
+    apt-get update; apt-get autoremove -y; apt-mark hold tzdata; apt-get upgrade -y; \
     apt-get install -y --no-install-recommends \
         apt-utils wget vim procps iputils-ping telnet file \
     ; \
-    apt-get clean; \
-    rm -rf /var/lib/apt/lists/*; \
+    apt-get clean; rm -rf /var/lib/apt/lists/*; \
     printf "alias ls='ls --color=auto'\nalias ll='ls -l --color=auto'\nalias l='ls -lA --color=auto'" >> /root/.bashrc
 
 ADD files/canal.$CANAL_TYPE.tgz /app/$CANAL_TYPE
