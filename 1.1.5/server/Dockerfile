@@ -5,9 +5,9 @@
 #
 
 FROM openjdk:8-jdk-slim
-LABEL maintainer="chinayin <whereismoney@qq.com>" Version="v1.1.5-alpha-2"
-ENV DEBIAN_FRONTEND=noninteractive DEPLOY_IMAGE_VERSION="2021-01-04 14:43"
-ENV CANAL_TYPE="server" CANAL_VERSION="1.1.5-alpha-2"
+LABEL maintainer="chinayin <whereismoney@qq.com>" Version="v1.1.5-alpha-3"
+ENV DEBIAN_FRONTEND=noninteractive DEPLOY_IMAGE_VERSION="2021-01-07 16:23"
+ENV CANAL_TYPE="server" CANAL_VERSION="1.1.5-alpha-3"
 
 ARG CHANGE_SOURCE=true
 ARG TIMEZONE=Asia/Shanghai
