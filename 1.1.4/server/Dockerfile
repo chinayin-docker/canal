@@ -12,15 +12,14 @@ ENV CANAL_TYPE="server" CANAL_VERSION="1.1.4"
 ARG CHANGE_SOURCE=true
 ARG TIMEZONE=Asia/Shanghai
 RUN if [ $CHANGE_SOURCE = true ]; then \
-    sed -i 's/deb.debian.org/mirrors.aliyun.com/' /etc/apt/sources.list; \
-    sed -i 's/security.debian.org/mirrors.aliyun.com/' /etc/apt/sources.list; \
-    sed -i 's/security-cdn.debian.org/mirrors.aliyun.com/' /etc/apt/sources.list; \
-fi; cp /usr/share/zoneinfo/$TIMEZONE /etc/localtime; echo "$TIMEZONE" > /etc/timezone; cat /etc/timezone;
+    sed -i 's/deb.debian.org/mirrors.aliyun.com/' /etc/apt/sources.list && \
+    sed -i 's/security.debian.org/mirrors.aliyun.com/' /etc/apt/sources.list && \
+    sed -i 's/security-cdn.debian.org/mirrors.aliyun.com/' /etc/apt/sources.list \
+;fi && cp /usr/share/zoneinfo/$TIMEZONE /etc/localtime && echo "$TIMEZONE" > /etc/timezone;
 
 RUN set -eux; \
     apt-get update; \
     apt-get autoremove -y; \
-    apt-get upgrade -y; \
     apt-get install -y --no-install-recommends \
         apt-utils wget vim procps iputils-ping telnet file \
     ; \
