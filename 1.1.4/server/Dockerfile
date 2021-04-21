@@ -1,42 +1,34 @@
 #
+#
 #--------------------------------------------------------------------------
-# Image Setup
+# canal-1.1.4
 #--------------------------------------------------------------------------
 #
 
-FROM openjdk:8-jdk-slim
-LABEL maintainer="chinayin <whereismoney@qq.com>" Version="v1.1.4"
-ENV DEBIAN_FRONTEND=noninteractive DEPLOY_IMAGE_VERSION="2021-01-07 17:39"
+FROM chinayin/openjdk:8-jdk
+LABEL maintainer="chinayin <whereismoney@qq.com>"
+
 ENV CANAL_TYPE="server" CANAL_VERSION="1.1.4"
+ENV CANAL_HOME /app/$CANAL_TYPE
 
-ARG CHANGE_SOURCE=true
-ARG TIMEZONE=Asia/Shanghai
-RUN if [ $CHANGE_SOURCE = true ]; then \
-    sed -i 's/deb.debian.org/mirrors.aliyun.com/' /etc/apt/sources.list && \
-    sed -i 's/security.debian.org/mirrors.aliyun.com/' /etc/apt/sources.list && \
-    sed -i 's/security-cdn.debian.org/mirrors.aliyun.com/' /etc/apt/sources.list \
-;fi && cp /usr/share/zoneinfo/$TIMEZONE /etc/localtime && echo "$TIMEZONE" > /etc/timezone;
-
-RUN set -eux; \
-    apt-get update; apt-get autoremove -y; apt-mark hold tzdata; apt-get upgrade -y; \
-    apt-get install -y --no-install-recommends \
-        apt-utils wget vim procps iputils-ping telnet file \
-    ; \
-    apt-get clean; rm -rf /var/lib/apt/lists/*; \
-    printf "alias ls='ls --color=auto'\nalias ll='ls -l --color=auto'\nalias l='ls -lA --color=auto'" >> /root/.bashrc
-
-ADD files/canal.$CANAL_TYPE.tgz /app/$CANAL_TYPE
 COPY bin/ /app
 
 RUN set -eux; \
-    export CANAL_PATH="/app/$CANAL_TYPE"; \
+    install_packages curl; \
     \
-    rm -f $CANAL_PATH/bin/*.bat; \
-    mv -f /app/*.sh "$CANAL_PATH/bin/"; \
-    chmod +x $CANAL_PATH/bin/*.sh; \
-    rm -rf $CANAL_PATH/conf/example; \
+    mkdir -p $CANAL_HOME; \
     \
-    printf "canal=$CANAL_TYPE\n path=$CANAL_PATH"; \
+    downloadUrl="https://github.com/alibaba/canal/releases/download/canal-$CANAL_VERSION/canal.deployer-$CANAL_VERSION.tar.gz"; \
+    curl -fsSL -o canal.tgz "$downloadUrl"; \
+    tar -xzvf canal.tgz --directory "$CANAL_HOME"; \
+    rm canal.tgz*; \
+    \
+    rm -f $CANAL_HOME/bin/*.bat; \
+    mv -f /app/*.sh "$CANAL_HOME/bin/"; \
+    chmod +x $CANAL_HOME/bin/*.sh; \
+    rm -rf $CANAL_HOME/conf/example; \
+    \
+    printf "canal=$CANAL_TYPE\n path=$CANAL_HOME"; \
     java -version
 
 EXPOSE 11111
