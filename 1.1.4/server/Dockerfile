@@ -14,7 +14,7 @@ ENV CANAL_HOME /app/$CANAL_TYPE
 COPY bin/ /app
 
 RUN set -eux; \
-    install_packages curl file; \
+    install_packages curl file net-tools; \
     \
     mkdir -p $CANAL_HOME; \
     \
