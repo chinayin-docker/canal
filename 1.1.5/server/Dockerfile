@@ -5,7 +5,7 @@
 #--------------------------------------------------------------------------
 #
 
-FROM chinayin/openjdk:8-jdk
+FROM chinayin/openjdk:8-jre-bullseye-slim
 LABEL maintainer="chinayin <whereismoney@qq.com>"
 
 ENV CANAL_TYPE="server" CANAL_VERSION="1.1.5"

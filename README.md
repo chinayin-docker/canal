@@ -15,7 +15,7 @@
 
 - `canal:<version>`
 
-### Use Canal
+### Usage
 
 You can use the image directly, e.g.
 
