@@ -1,4 +1,4 @@
-# Canal Base Image
+# Canal Docker Image
 
 [![Docker Image CI](https://github.com/chinayin-docker/canal/actions/workflows/ci.yml/badge.svg?event=schedule)](https://github.com/chinayin-docker/canal/actions/workflows/ci.yml)
 ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/chinayin/canal?sort=semver)
