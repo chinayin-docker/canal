@@ -85,12 +85,12 @@ case "$#" in
   ;;
 esac
 
-CANAL_JAVA_OPTS=${CANAL_JAVA_OPTS:-"-Xms1024m -Xmx1024m"}
+CANAL_JAVA_OPTS=${CANAL_JAVA_OPTS:-"-Xms1g -Xmx1g"}
 str=$(file -L $JAVA | grep 64-bit)
 if [ -n "$str" ]; then
-  JAVA_OPTS="-server $CANAL_JAVA_OPTS -Xmn1024m -XX:SurvivorRatio=2 -XX:PermSize=96m -XX:MaxPermSize=256m -Xss256k -XX:-UseAdaptiveSizePolicy -XX:MaxTenuringThreshold=15 -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:+HeapDumpOnOutOfMemoryError"
+  JAVA_OPTS="-server $CANAL_JAVA_OPTS -Xmn1g -XX:SurvivorRatio=2 -XX:MetaspaceSize=96m -XX:MaxMetaspaceSize=256m -Xss256k -XX:-UseAdaptiveSizePolicy -XX:MaxTenuringThreshold=15 -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:+HeapDumpOnOutOfMemoryError"
 else
-  JAVA_OPTS="-server $CANAL_JAVA_OPTS -XX:NewSize=256m -XX:MaxNewSize=256m -XX:MaxPermSize=128m "
+  JAVA_OPTS="-server $CANAL_JAVA_OPTS -XX:NewSize=256m -XX:MaxNewSize=256m -XX:MaxMetaspaceSize=128m "
 fi
 echo $JAVA_OPTS;
 JAVA_OPTS=" $JAVA_OPTS -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true -Dfile.encoding=UTF-8"
