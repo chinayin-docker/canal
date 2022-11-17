@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        major: [ 1.1.5 , 1.1.6 ]
+        major: [ 1.1.6 ]
         variant: [ server ]
     steps:
       - name: Checkout code
@@ -18,9 +18,9 @@ jobs:
       - name: Set variables
         id: vars
         run: |
-          echo ::set-output name=repository::${GITHUB_ACTOR}/$(basename ${GITHUB_REPOSITORY})
-          echo ::set-output name=tag::${{ matrix.major }}
-          echo ::set-output name=workdir::${{ matrix.major }}/${{ matrix.variant }}
+          echo "repository=${GITHUB_ACTOR}/$(basename ${GITHUB_REPOSITORY})" >> $GITHUB_OUTPUT
+          echo "tag=${{ matrix.major }}" >> $GITHUB_OUTPUT
+          echo "workdir=${{ matrix.major }}/${{ matrix.variant }}" >> $GITHUB_OUTPUT
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       - name: Set up Docker Buildx
