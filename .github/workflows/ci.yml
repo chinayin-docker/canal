@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        major: [ 1.1.6 ]
+        major: [ 1.1.7 ]
         variant: [ server ]
     steps:
       - name: Checkout code
@@ -31,7 +31,7 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
       - name: Build and push
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: ${{ steps.vars.outputs.workdir }}
           pull: true
