@@ -28,6 +28,10 @@ RUN set -eux; \
     chmod +x $CANAL_HOME/bin/*.sh; \
     rm -rf $CANAL_HOME/conf/example; \
     \
+    # fix bug: org.h2.jdbc.JdbcSQLDataException: Value too long for column "CHARACTER VARYING"
+    curl -fsSL -o "$CANAL_HOME/lib/h2-2.2.224.jar" "https://repo1.maven.org/maven2/com/h2database/h2/2.2.224/h2-2.2.224.jar"; \
+    rm -f $CANAL_HOME/lib/h2-2.1.210.jar; \
+    \
     printf "canal=$CANAL_TYPE\n path=$CANAL_HOME"; \
     java -version
 
