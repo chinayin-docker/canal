@@ -1,14 +1,14 @@
 #
 #
 #--------------------------------------------------------------------------
-# canal-1.1.4
+# canal-1.1.8
 #--------------------------------------------------------------------------
 #
 
 FROM chinayin/openjdk:8-jre
 LABEL maintainer="chinayin <whereismoney@qq.com>"
 
-ENV CANAL_TYPE="server" CANAL_VERSION="1.1.4"
+ENV CANAL_TYPE="server" CANAL_VERSION="1.1.8"
 ENV CANAL_HOME /app/$CANAL_TYPE
 
 COPY bin/ /app
@@ -27,6 +27,10 @@ RUN set -eux; \
     mv -f /app/*.sh "$CANAL_HOME/bin/"; \
     chmod +x $CANAL_HOME/bin/*.sh; \
     rm -rf $CANAL_HOME/conf/example; \
+    \
+    # fix bug: org.h2.jdbc.JdbcSQLDataException: Value too long for column "CHARACTER VARYING"
+    curl -fsSL -o "$CANAL_HOME/lib/h2-2.2.224.jar" "https://repo1.maven.org/maven2/com/h2database/h2/2.2.224/h2-2.2.224.jar"; \
+    rm -f $CANAL_HOME/lib/h2-2.1.210.jar; \
     \
     printf "canal=$CANAL_TYPE\n path=$CANAL_HOME"; \
     java -version
